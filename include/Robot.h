@@ -17,7 +17,4 @@ private:
     Joint J2;
     Joint J3;
     Servo Grp;
-
-    int GRP_OPEN;
-    int GRP_CLOSE;
 };
