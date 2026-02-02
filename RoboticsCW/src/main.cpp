@@ -7,9 +7,10 @@ Robot* robot = new Robot();
 void setup() {
   Serial.begin(115200);
   robot->init();
-  delay(3000);
+  delay(100);
 }
 
 void loop() {
-  robot->potMove();
+  // robot->potMove();
+  robot->jointMove(0, 90, 90, true);
 }

@@ -11,7 +11,7 @@
 #define JOINT3_PIN 4
 #define GRIPPER_PIN 11
 
-#define OFF1 0
+#define OFF1 6
 #define OFF2 0
 #define OFF3 0
 
