@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "Robot.h"
+#include "Kinematics.h"
 
 #define POT1 A1
 #define POT2 A2

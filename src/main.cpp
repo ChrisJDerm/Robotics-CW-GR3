@@ -7,7 +7,7 @@ Robot* robot = new Robot();
 void setup() {
   Serial.begin(115200);
   robot->init();
-  delay(3000); // Wait 5 seconds before going into loop()
+  delay(3000);
 }
 
 void loop() {
