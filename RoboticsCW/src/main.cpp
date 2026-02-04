@@ -11,6 +11,5 @@ void setup() {
 }
 
 void loop() {
-  // robot->potMove();
-  robot->jointMove(0, 90, 90, true);
+  robot->jointMove(30, 45, 60, true);
 }

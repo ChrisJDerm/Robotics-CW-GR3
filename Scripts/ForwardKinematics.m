@@ -16,32 +16,15 @@ P3 = [0, L3, 0, 1]';
 P = T03 * P3;
 
 % cm
-l1 = 7.4;
-l2 = 9.8;
-l3 = 18.5;
+l1 = 0;
+l2 = 9.5;
+l3 = 16.5;
 
-j1 = deg2rad(0);
-j2 = deg2rad(90);
-j3 = deg2rad(90);
-
-% J1_out = double(subs(T01*T12, [L1, L2, L3, J1, J2, J3], [l1, l2, l3, t1, t2, t3]))
+j1 = deg2rad(30);
+j2 = deg2rad(45);
+j3 = deg2rad(60);
 
 P_out = double(subs(P, [L1, L2, L3, J1, J2, J3], [l1, l2, l3, j1, j2, j3]))
-
-% % Extract position
-% x = P_out(1);
-% y = P_out(2);
-% z = P_out(3);
-% 
-% figure
-% plot3(x, y, z, 'ro', 'MarkerSize', 8, 'LineWidth', 2)
-% grid on
-% axis equal
-% xlabel('X')
-% ylabel('Y')
-% zlabel('Z')
-% title('End-effector position relative to base')
-
 
 function out = transform(i, DH)
     alp = DH(i, 1);
