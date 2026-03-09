@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "Robot.h"
+#include "Kinematics.h"
 
 Robot* robot = new Robot();
 
@@ -11,5 +12,5 @@ void setup() {
 }
 
 void loop() {
-  robot->jointMove(30, 45, 60, true);
+  robot->moveIK(0, 0, 26, true);
 }

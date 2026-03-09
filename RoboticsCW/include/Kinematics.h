@@ -28,8 +28,6 @@ private:
     Kinematics() = delete;
 
     // Joint distances
-    static constexpr float L0 = 2;
-    static constexpr float L1 = 5;
-    static constexpr float L2 = 5;
-    static constexpr float L3 = 5;
+    static constexpr float L1 = 9.5;
+    static constexpr float L2 = 16.5;
 };

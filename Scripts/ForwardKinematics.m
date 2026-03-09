@@ -20,9 +20,9 @@ l1 = 0;
 l2 = 9.5;
 l3 = 16.5;
 
-j1 = deg2rad(30);
+j1 = deg2rad(45);
 j2 = deg2rad(45);
-j3 = deg2rad(60);
+j3 = deg2rad(45);
 
 P_out = double(subs(P, [L1, L2, L3, J1, J2, J3], [l1, l2, l3, j1, j2, j3]))
 
