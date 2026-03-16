@@ -1,9 +1,19 @@
 #pragma once
 
+#include "Arduino.h"
 #include "Joint.h"
+#include "Kinematics.h"
 
 class Robot {
 public:
+
+    struct Trajectory
+    {
+        Kinematics::Vec3 points[100];
+        int numPoints;
+        float tf; //seconds
+    };
+
     Robot();
 
     void init();
@@ -11,12 +21,25 @@ public:
     // void servoWrite(Servo joint, int pos);
     void potMove();
     void grpMove(bool PosGRP);
-    void moveIK(int x, int y, int z, bool PosGRP);
+    void moveIK(float x, float y, float z, bool PosGRP);
     void potMoveIK(bool PosGRP);
 
+    Kinematics::Vec3 getCurrentJoints();
+    Kinematics::Vec3 getCurrentPos();
+
+    void generateTrajectory(Kinematics::Vec3 start, float tf);
+
+    void runTrajectory(bool PosGrp);
+
+    // static void trajTimerCallback();
 private:
     Joint J1;
     Joint J2;
     Joint J3;
     Servo Grp;
+
+    Trajectory traj;
+
+    int index;
+    // volatile static int index;
 };
