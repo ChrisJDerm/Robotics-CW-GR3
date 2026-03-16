@@ -24,10 +24,10 @@ Kinematics::Vec3 Kinematics::Forward(Kinematics::Vec3 joints){
     toolPose.a = L2*c1*c2*c3 + L2*c1*s2*s3 + L1*c1*c2;
 
     // y = L2*s1*c2*c3 + L2*s1*s2*s3 + L1*s1*c2
-    toolPose.b = L2*s1*c2*c3 + L2*s1*s2*s3 + L1*s1*c2;
+    toolPose.b = -L2*s1*c2*c3 - L2*s1*s2*s3 - L1*s1*c2;
 
     // z = -L2*s2*c3 + L2*c2*s3 - L1*s2
-    toolPose.c = -L2*s2*c3 + L2*c2*s3 - L1*s2;
+    toolPose.c = L2*s2*c3 - L2*c2*s3 + L1*s2;
 
     return toolPose;
 }

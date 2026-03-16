@@ -39,7 +39,4 @@ private:
     Servo Grp;
 
     Trajectory traj;
-
-    int index;
-    // volatile static int index;
 };

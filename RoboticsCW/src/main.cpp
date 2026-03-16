@@ -3,8 +3,6 @@
 #include "Robot.h"
 #include "Kinematics.h"
 
-#include <TimerOne.h>
-
 Robot* robot = new Robot();
 
 void setup() {
@@ -12,12 +10,23 @@ void setup() {
   robot->init();
   delay(100);
 
-  // Timer1.attachInterrupt(robot->trajTimerCallback);
-
-  robot->jointMove(90, 90, 90, false);
+  robot->jointMove(90, 90, 90, true);
   delay(1000);
-  robot->generateTrajectory({15, -10, 5}, 5);
+  robot->generateTrajectory({0, -13.5, -8}, 5);
+  robot->runTrajectory(true);
+  delay(1000);
+  robot->grpMove(false);
+  delay(1000);
+  robot->generateTrajectory(Kinematics::Forward({90, 90, 90}), 5);
+  robot->runTrajectory(false); 
+  delay(1000);
+  robot->generateTrajectory({15, 0, -5}, 5);
   robot->runTrajectory(false);
+  delay(1000);
+  robot->grpMove(true);
+  delay(1000);
+  robot->generateTrajectory(Kinematics::Forward({90, 90, 90}), 5);
+  robot->runTrajectory(true); 
 }
 
 void loop() {

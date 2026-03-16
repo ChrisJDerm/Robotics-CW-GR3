@@ -14,7 +14,7 @@
 #define OFF2 0
 #define OFF3 0
 
-#define GRP_OPEN 110
+#define GRP_OPEN 90
 #define GRP_CLOSE 180
 
 Robot::Robot() :
@@ -74,9 +74,18 @@ Kinematics::Vec3 Robot::getCurrentPos(){
 
 void Robot::generateTrajectory(Kinematics::Vec3 end, float tf) {
 
+    tf = constrain(tf, 0, 5);
+
     Kinematics::Vec3 start = getCurrentPos();
 
-    const float dt = 0.1f;
+    Serial.print("Start Pose - X: ");
+    Serial.print(start.a);
+    Serial.print(", Y: ");
+    Serial.print(start.b);
+    Serial.print(", Z: ");
+    Serial.println(start.c);
+
+    const float dt = 0.05f;
     traj.tf = tf;
     traj.numPoints = (int)(tf / dt) + 1;
 
@@ -115,24 +124,24 @@ void Robot::generateTrajectory(Kinematics::Vec3 end, float tf) {
 void Robot::runTrajectory(bool PosGrp){
     unsigned long start = millis();
     unsigned long now = start;
-    while (now - start <= traj.tf*1000.0 + 200)
+    int index = 0;
+    while (now - start <= traj.tf*1000.0)
     {
         now = millis();
-        index = (now - start) / 100;
-        float x = traj.points[index].a;
-        float y = traj.points[index].b;
-        float z = traj.points[index].c;
+        if (index < traj.numPoints)
+        {
+            index = (now - start) / 50;
+            float x = traj.points[index].a;
+            float y = traj.points[index].b;
+            float z = traj.points[index].c;
 
-        Kinematics::Vec3 joints = Kinematics::Inverse(traj.points[index]);
-
-        jointMove(joints.a, joints.b, joints.c, PosGrp);
-        Serial.print("X: ");
-        Serial.print(x);
-        Serial.print(", Y: ");
-        Serial.print(y);
-        Serial.print(", Z: ");
-        Serial.println(z);
+            moveIK(x, y, z, PosGrp);
+        } else {
+            break;
+        }
     }
-
-    // jointMove(Kinematics::Inverse(traj.points[index]));
+    moveIK(traj.points[traj.numPoints - 1].a, 
+        traj.points[traj.numPoints - 1].b, 
+        traj.points[traj.numPoints - 1].c, 
+        PosGrp);
 }
