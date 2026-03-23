@@ -10,7 +10,7 @@
 #define JOINT3_PIN 4
 #define GRIPPER_PIN 11
 
-#define OFF1 6
+#define OFF1 8
 #define OFF2 0
 #define OFF3 0
 
@@ -35,6 +35,8 @@ void Robot::jointMove(int theta1, int theta2, int theta3, bool PosGRP){
     J2.writeDeg(theta2);
     J3.writeDeg(theta3);
     grpMove(PosGRP);
+    joints = {J1.getPos(), J2.getPos(), J3.getPos()};
+    pose = Kinematics::Forward(joints);
 }   
 
 void Robot::potMove(){
@@ -63,12 +65,10 @@ void Robot::potMoveIK(bool PosGRP){
 }
 
 Kinematics::Vec3 Robot::getCurrentJoints(){
-    Kinematics::Vec3 joints = {J1.getPos(), J2.getPos(), J3.getPos()};
     return joints;
 }
 
 Kinematics::Vec3 Robot::getCurrentPos(){
-    Kinematics::Vec3 pose = Kinematics::Forward(getCurrentJoints());
     return pose;
 }
 
@@ -144,4 +144,44 @@ void Robot::runTrajectory(bool PosGrp){
         traj.points[traj.numPoints - 1].b, 
         traj.points[traj.numPoints - 1].c, 
         PosGrp);
+}
+
+void Robot::linearMove(Kinematics::Vec3 end, float tf, bool PosGrp){
+    generateTrajectory(end, tf);
+    runTrajectory(PosGrp);
+}
+
+void Robot::pickAndPlace(Kinematics::Vec3 pick, Kinematics::Vec3 place, 
+                                int pathTime, int delayTime){
+
+    // Home                                
+    jointMove(90, 90, 90, true);
+    delay(delayTime);
+
+    // Move to pick                                
+    linearMove(pick, pathTime, true);
+    delay(delayTime);
+
+    // Pick                                
+    grpMove(false);
+    delay(delayTime);
+
+    // Home                                
+    linearMove(Kinematics::Forward({90, 90, 90}), pathTime, false);
+    delay(delayTime);
+
+    // Move to place                                
+    linearMove(place, pathTime, false);
+    delay(delayTime);
+
+    // Place                                
+    grpMove(true);
+    delay(delayTime);
+
+    // Clear place vertically                 
+    linearMove({place.a, place.b, place.c + 5}, pathTime/2, true);
+    delay(delayTime);
+
+    //Home
+    linearMove(Kinematics::Forward({90, 90, 90}), pathTime, true);
 }

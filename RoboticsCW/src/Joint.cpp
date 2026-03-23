@@ -11,7 +11,6 @@ void Joint::init(){
 }
 
 void Joint::writeDeg(int pos){
-    // pos = constrain(pos, 0, 180);
-    this->jAngle = pos + offset;
+    this->jAngle = pos;
     servo.write(pos + offset);
 }

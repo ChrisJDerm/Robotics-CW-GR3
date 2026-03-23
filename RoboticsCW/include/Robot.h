@@ -27,16 +27,23 @@ public:
     Kinematics::Vec3 getCurrentJoints();
     Kinematics::Vec3 getCurrentPos();
 
-    void generateTrajectory(Kinematics::Vec3 start, float tf);
+    void generateTrajectory(Kinematics::Vec3 end, float tf);
 
     void runTrajectory(bool PosGrp);
 
-    // static void trajTimerCallback();
+    void linearMove(Kinematics::Vec3 end, float tf, bool PosGrp);
+
+    void pickAndPlace(Kinematics::Vec3 pick, Kinematics::Vec3 place, 
+                                int pathTime, int delayTime);
+
 private:
     Joint J1;
     Joint J2;
     Joint J3;
     Servo Grp;
+
+    Kinematics::Vec3 joints;
+    Kinematics::Vec3 pose;
 
     Trajectory traj;
 };
